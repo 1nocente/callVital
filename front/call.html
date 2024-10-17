@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jitsi Meet</title>
+</head>
+<body>
+  <h1>Reunião Jitsi Meet</h1>
+  <button id="create-meeting-btn">Criar Reunião</button>
+  <div id="meeting-container"></div>
+
+  <script>
+    document.getElementById('create-meeting-btn').addEventListener('click', async () => {
+      try {
+        const response = await fetch('http://localhost:3001/generate-meeting');
+        const data = await response.json();
+        const iframe = document.createElement('iframe');
+        iframe.src = data.url;
+        iframe.style.width = '100%';
+        iframe.style.height = '500px';
+        iframe.style.border = 'none';
+        iframe.allow = 'camera; microphone; fullscreen';
+        document.getElementById('meeting-container').appendChild(iframe);
+      } catch (error) {
+        console.error('Erro ao gerar reunião:', error);
+      }
+    });
+  </script>
+</body>
+</html>
